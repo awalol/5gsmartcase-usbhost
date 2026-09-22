@@ -1,6 +1,6 @@
-@shift /0
 @echo off
 chcp 936 >nul
+cd /d "%~dp0"
 
 rem ============================================================
 rem  Add tools\ to PATH so adb / spd_dump resolve from anywhere
