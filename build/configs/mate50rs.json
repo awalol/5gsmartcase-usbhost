@@ -1,0 +1,22 @@
+{
+  "device": "mate50rs",
+  "input": {
+    "boot.bin": "ad03828d8a69e936ddd97b25a05eac64e0624289a527ed2e9271d5a7416eeb6c",
+    "uboot.bin": "a8e29e155eaa16430b9e368d92a010031d0f730ab60ddb818b7056878c57c54c"
+  },
+  "output": {
+    "boot.bin": "f844af720d45fc175da255c7a12686e4d6c93ee2e3f080f66ddd324737bf6020",
+    "uboot.bin": "660c73d35d14fc2907b8095b7d083ed1eefbda197042d53bd51366f717f45413"
+  },
+  "uboot": {
+    "patches": [
+      "0x9F05D9EC:0xA9B57BFD:0x52800020",
+      "0x9F05D9F0:0x910003FD:0xD65F03C0"
+    ]
+  },
+  "offsets": {
+    "boot_signature_footer": "0x9eaa00",
+    "boot_worker_wq_mode": "0x3e4670",
+    "uboot_verify_runtime": ["0x9f05d9ec", "0x9f05d9f0"]
+  }
+}

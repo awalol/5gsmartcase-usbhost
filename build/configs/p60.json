@@ -1,0 +1,21 @@
+{
+  "device": "p60",
+  "input": {
+    "boot.bin": "e0db8ab6fa30cdd653a33dbf2f505f98300273c055b7a31b0efe0607ebd4b198",
+    "uboot.bin": "6dad2c6670a4055143c2a1e628f136580d1265947166f903408a26b9221306e3"
+  },
+  "output": {
+    "boot.bin": "9ea4f27a835c89a1560ac5e40a4a9d705c36a224c1411ecc9a3576824f00db1a",
+    "uboot.bin": "fef82c56d7345c8da2e2fa7262782ff654565fe884455c2fb6d6bfe8c364fc42"
+  },
+  "uboot": {
+    "patches": [
+      "0x9F05D9EC:0xA9B57BFD:0x52800020",
+      "0x9F05D9F0:0x910003FD:0xD65F03C0"
+    ]
+  },
+  "offsets": {
+    "boot_worker_wq_mode": "0x3e4670",
+    "uboot_verify_runtime": ["0x9f05d9ec", "0x9f05d9f0"]
+  }
+}

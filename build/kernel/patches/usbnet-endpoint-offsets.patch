@@ -1,0 +1,18 @@
+主题：[补丁] usbnet：修正精确 ABI 构建中的端点数组偏移
+
+这是针对精确安装版本 AArch64 4.14.98 usbnet.ko 的二进制补丁记录，其
+SHA-256 为
+d18d0fc758a5f23d74f2bbd72bc57cd3db1ddc9f86e59a2ba91edc5040a8e33f.
+
+模块的 struct usb_device 布局将 ep_in 放在 +928、ep_out 放在 +1056。两条
+LDR 指令分别错误使用了 +920 和 +1048。在模块文件中（text 从 0x40 开始），
+替换以下小端指令字：
+
+  file offset 0x2fa4: f941cc00 -> f941d000 (text + 0x2f64)
+  file offset 0x3090: f9420c00 -> f9421000 (text + 0x3050)
+
+规范实现为 `../patch_usbnet_endpoint_abi.py`。它会校验完整输入哈希和指令，
+只修改这八个字节，写入清单，并拒绝覆盖或重复应用。
+
+这不是通用的源码级 ABI 转换，也不会更新 DWARF。输出模块在精确目标内核和
+硬件上加载验证前，均属于未经设备验证的候选版本。

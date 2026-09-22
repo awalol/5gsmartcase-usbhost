@@ -1,0 +1,21 @@
+Subject: [补丁] cdc_ether：移除 Realtek RTL8153 黑名单项
+
+从 cdc_ether 的 USB 设备匹配表中移除 Realtek 0bda:8153 的 CDC-ECM
+匹配项，使该设备不再被 cdc_ether 绑定。其余匹配项保持不变。
+
+--- a/drivers/net/usb/cdc_ether.c
++++ b/drivers/net/usb/cdc_ether.c
+@@ -735,13 +735,6 @@ static const struct usb_device_id products[] = {
+ 	.driver_info = 0,
+ },
+ 
+-/* Realtek RTL8153 Based USB 3.0 Ethernet Adapters */
+-{
+-	USB_DEVICE_AND_INTERFACE_INFO(REALTEK_VENDOR_ID, 0x8153, USB_CLASS_COMM,
+-			USB_CDC_SUBCLASS_ETHERNET, USB_CDC_PROTO_NONE),
+-	.driver_info = 0,
+-},
+-
+ /* Samsung USB Ethernet Adapters */
+ {
+ 	USB_DEVICE_AND_INTERFACE_INFO(SAMSUNG_VENDOR_ID, 0xa101, USB_CLASS_COMM,
