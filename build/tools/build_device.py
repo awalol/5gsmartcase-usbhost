@@ -12,6 +12,8 @@ import subprocess
 import sys
 import tempfile
 
+import build_mate50rs
+
 ROOT = Path(__file__).resolve().parents[1]
 INPUT = ROOT / "input"
 OUTPUT = ROOT / "output"
@@ -56,15 +58,9 @@ def build(device: str) -> None:
             copy_atomic(p60_out / "boot.img", boot_out)
             copy_atomic(p60_out / "uboot.bin", uboot_out)
         else:
-            run([
-                sys.executable, str(TOOLS / "build_sprd_postverify_uboot_patch.py"),
-                str(uboot), str(uboot_out), "--load-address", "0x9f000000",
-                "--patch-word", config["uboot"]["patches"][0],
-                "--patch-word", config["uboot"]["patches"][1],
-            ])
-            strict = temp / "strict-host.bin"
-            run([sys.executable, str(TOOLS / "patch_dtb_strict_host_inplace.py"), str(boot), str(strict), "--allow-signed-image"])
-            run([sys.executable, str(TOOLS / "patch_boot_usb_cold_start.py"), str(strict), str(boot_out), "--allow-signed-image"])
+            built_boot, built_uboot = build_mate50rs.build(INPUT, temp, config)
+            copy_atomic(built_boot, boot_out)
+            copy_atomic(built_uboot, uboot_out)
 
         if sha(boot_out.read_bytes()) != config["output"]["boot.bin"]:
             raise RuntimeError("boot output hash mismatch")
