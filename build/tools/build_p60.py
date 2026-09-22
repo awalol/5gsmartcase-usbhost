@@ -14,8 +14,9 @@ import patch_dtb_force_host_inplace as dtb
 import patch_dtb_strict_host_inplace as strict
 
 ROOT = Path(__file__).resolve().parents[1]
-BOOT_HASH = "e0db8ab6fa30cdd653a33dbf2f505f98300273c055b7a31b0efe0607ebd4b198"
-UBOOT_HASH = "6dad2c6670a4055143c2a1e628f136580d1265947166f903408a26b9221306e3"
+CONFIG = json.loads((ROOT / "configs" / "p60.json").read_text(encoding="utf-8"))
+BOOT_HASH = CONFIG["input"]["boot.bin"]
+UBOOT_HASH = CONFIG["input"]["uboot.bin"]
 BOOT_SIZE = 0xD00000
 WORKER_OFFSET = 0x3E4664
 WORKER = bytes.fromhex("621b00d0200080524280079180ae00b977ffff17")
@@ -107,9 +108,9 @@ def build(output, input_dir):
     original_uboot = (input_dir / "uboot.bin").read_bytes()
     boot, boot_report = boot_patch(original_boot)
     loader, patches = uboot_patch(original_uboot)
-    require(sha(boot) == "9ea4f27a835c89a1560ac5e40a4a9d705c36a224c1411ecc9a3576824f00db1a",
+    require(sha(boot) == CONFIG["output"]["boot.bin"],
             "boot output differs from tested P60 candidate")
-    require(sha(loader) == "fef82c56d7345c8da2e2fa7262782ff654565fe884455c2fb6d6bfe8c364fc42",
+    require(sha(loader) == CONFIG["output"]["uboot.bin"],
             "U-Boot output differs from tested P60 candidate")
     manifest = {
         "format": "p60-strict-host-cold-start-v1", "status": "UNTESTED_ON_P60_DEVICE",
