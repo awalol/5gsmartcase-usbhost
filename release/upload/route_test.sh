@@ -2,7 +2,7 @@
 sleep 5
 
 killall powerd # 不杀掉系统在网卡上线以后会自动进入睡眠卡死
-# echo on > /sys/bus/platform/devices/xhci-hcd.0.auto/power/control # USB3需要设置为on以后才能识别到设备
+echo on > /sys/bus/platform/devices/xhci-hcd.0.auto/power/control # USB3需要设置为on以后才能识别到设备
 # 但是开启了以后，想要切回USB Gadget会在开机过程卡死
 
 #connmanctl enable gadget
