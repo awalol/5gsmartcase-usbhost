@@ -168,7 +168,7 @@ echo. ---------------------------------------------
 echo.
 echo 请现在短接并进入U2S刷机模式，程序将等待600秒...
 echo.
-spd_dump --wait 600 skip_confirm 1 exec_addr 0x3f28 fdl tools\fdl1 0x28007000 fdl tools\fdl2 0x9efffe00 exec timeout 180000 path backup r boot r uboot w uboot %DEV%\uboot.bin w boot %DEV%\boot.bin reset
+spd_dump --wait 600 skip_confirm 1 exec_addr 0x3f28 fdl tools\fdl1 0x28007000 fdl tools\fdl2 0x9efffe00 exec timeout 180000 w uboot %DEV%\uboot.bin w boot %DEV%\boot.bin reset
 
 echo.
 echo.
